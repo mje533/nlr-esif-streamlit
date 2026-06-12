@@ -343,7 +343,7 @@ summary_cols[1].metric("Start", df.index.min().strftime("%Y-%m-%d"))
 summary_cols[2].metric("End", df.index.max().strftime("%Y-%m-%d"))
 
 with st.expander("Source column mapping", expanded=False):
-    st.dataframe(source_mapping, hide_index=True, use_container_width=True)
+    st.dataframe(source_mapping, hide_index=True, width="stretch")
     st.markdown(
         "PUE is plotted from `pue`; ERE is plotted from `ere`. "
         "The `energy_reuse` field remains available as a separate imported series. "
@@ -371,7 +371,7 @@ st.plotly_chart(
         show_markers=show_markers,
         fixed_pue_ere_scale=fixed_scale,
     ),
-    use_container_width=True,
+    width="stretch",
 )
 
 current_chart_download = chart_download_frame(plot_data, normalized=normalized)
@@ -385,13 +385,14 @@ st.download_button(
 st.subheader("Annual Summary")
 annual_columns = [column for column in ["pue", "ere", "erf"] if column in available_columns]
 annual_summary = build_annual_summary(df, annual_columns)
-st.plotly_chart(build_annual_median_figure(annual_summary), use_container_width=True)
+st.plotly_chart(build_annual_median_figure(annual_summary), width="stretch")
 
 annual_download = flatten_annual_summary(annual_summary)
-st.dataframe(annual_download, hide_index=True, use_container_width=True)
+st.dataframe(annual_download, hide_index=True, width="stretch")
 st.download_button(
     "Download annual summary as CSV",
     data=annual_download.to_csv(index=False).encode("utf-8"),
     file_name="nlr_esif_annual_summary.csv",
     mime="text/csv",
 )
+
