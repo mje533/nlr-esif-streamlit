@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+data/
+exports/
+
+*.log
+
+NLR_PUE_ERE_Timeseries*.ipynb
+requirements_streamlit.txt
