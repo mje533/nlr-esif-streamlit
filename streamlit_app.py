@@ -1,5 +1,5 @@
 ﻿from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -121,7 +121,7 @@ def available_numeric_columns(df: pd.DataFrame) -> list[str]:
 def resample_timeseries(
     df: pd.DataFrame,
     selected_columns: Iterable[str],
-    resample_rule: str | None,
+    resample_rule: Optional[str],
     aggregation: str,
     rolling_points: int,
 ) -> pd.DataFrame:
@@ -174,7 +174,7 @@ def build_timeseries_figure(
     selected_set = set(selected_columns)
     pue_ere_only = bool(selected_set) and selected_set.issubset({"pue", "ere"})
 
-    def add_trace(fig: go.Figure, column: str, secondary_y: bool | None = None) -> None:
+    def add_trace(fig: go.Figure, column: str, secondary_y: Optional[bool] = None) -> None:
         y = normalized_to_first_valid(plot_data[column]) if normalized else plot_data[column]
         value_label = "Indexed value" if normalized else "Value"
         trace = go.Scatter(
@@ -395,4 +395,5 @@ st.download_button(
     file_name="nlr_esif_annual_summary.csv",
     mime="text/csv",
 )
+
 
